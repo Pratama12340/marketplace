@@ -1,38 +1,83 @@
-# Web Marketplace Tradisional (PHP Native + MySQLi + Bootstrap 5)
+# Pasar Nusantara — Web Marketplace Tradisional & REST API (PHP Native + MySQLi)
 
-Fitur: daftar produk (cari & filter kategori), detail produk, CRUD produk (login penjual), keranjang belanja, checkout yang menyimpan transaksi ke database (dengan database transaction), serta manajemen status pesanan.
+Aplikasi Web Marketplace Tradisional dilengkapi layanan **REST API (JSON Web Service)** menggunakan PHP Native, MySQLi (Prepared Statements & Database Transaction), dan Bootstrap 5.
 
-## Struktur
+## Fitur Utama
+1. **Web Marketplace (Frontend & Portal Penjual)**
+   - Katalog produk dengan pencarian & filter kategori, detail produk, keranjang belanja berbasis sesi, dan checkout dengan **MySQLi Database Transaction** (`BEGIN`, `COMMIT`, `ROLLBACK`).
+   - Portal Penjual (`admin/`): Login autentikasi password hash, CRUD katalog produk + upload gambar, dan manajemen status pesanan.
+2. **Layanan Web Service / REST API (`api/`)**
+   - `GET /api/produk.php` — Menampilkan seluruh daftar produk (mendukung filter `?kategori=` & `?q=`).
+   - `GET /api/produk.php?id={id}` — Menampilkan detail satu produk berdasarkan ID (`404 Not Found` bila tidak ditemukan).
+   - `GET /api/kategori.php` — Menampilkan daftar seluruh kategori beserta jumlah produknya.
+   - `POST /api/pesanan.php` — Membuat pesanan baru melalui payload JSON dengan validasi stok & **Database Transaction**.
+   - `GET /api/pesanan.php` (atau `?kode=INV...`) — Menampilkan daftar atau rincian pesanan.
+
+## Struktur Direktori
 ```
-index.php, produk.php, keranjang.php, checkout.php, sukses.php
-admin/   login, logout, produk (list+hapus), produk_form (tambah/edit), pesanan
-includes/ init.php (koneksi & helper), header.php, footer.php
-uploads/  gambar produk
-database.sql, config.example.php, docs/PERANCANGAN.md
+├── api/
+│   ├── bootstrap.php      # Koneksi DB, helper JSON response, CORS, & error handler
+│   ├── produk.php         # Endpoint GET daftar produk & GET detail produk (?id=)
+│   ├── kategori.php       # Endpoint GET daftar kategori
+│   └── pesanan.php        # Endpoint POST buat pesanan baru & GET riwayat pesanan
+├── admin/                 # Portal penjual (login, logout, kelola produk, pesanan)
+├── includes/              # Komponen utama (init.php, header.php, footer.php)
+├── uploads/               # Gambar & ilustrasi produk
+├── docs/                  # Dokumen Perancangan, ERD, Laporan REST API (.doc & screenshot)
+├── index.php, produk.php, keranjang.php, checkout.php, sukses.php
+├── database.sql           # Skema tabel & data awal MySQL
+└── config.example.php     # Contoh konfigurasi koneksi database
 ```
 
-## Instalasi lokal (XAMPP)
-1. Buat database `marketplace`, lalu import `database.sql`.
-2. Salin `config.example.php` menjadi `config.php`, isi dengan `localhost`, `root`, password kosong, `marketplace`.
-3. Letakkan folder di `htdocs`, buka `http://localhost/marketplace`.
+## Instalasi Lokal (XAMPP / Laragon)
+1. Buat database bernama `marketplace` di phpMyAdmin, lalu import file `database.sql`.
+2. Salin `config.example.php` menjadi `config.php`, sesuaikan kredensial (`localhost`, `root`, password kosong, `marketplace`).
+3. Akses aplikasi web di `http://localhost/marketplace` dan endpoint REST API di `http://localhost/marketplace/api/produk.php`.
+   - **Akun Penjual Default:** `admin@pasar.com` / `admin123`
 
-Login penjual: `admin@pasar.com` / `admin123` (ganti setelah deploy).
+## Contoh Penggunaan REST API
 
-## Deploy ke InfinityFree
-1. Daftar di infinityfree.com, buat akun hosting (subdomain gratis).
-2. Di Control Panel, buat MySQL Database. Catat hostname (sqlXXX.infinityfree.com), username, nama database, dan password.
-3. Buka phpMyAdmin, pilih database, import `database.sql`.
-4. Salin `config.example.php` jadi `config.php`, isi kredensial InfinityFree.
-5. Upload semua file ke folder `htdocs` via File Manager atau FTP (FileZilla).
-6. Buka subdomain kamu dan uji aplikasi.
-
-## Upload ke GitHub
+### 1. Menampilkan Seluruh Produk
+- **Request:** `GET http://localhost/marketplace/api/produk.php`
+- **Response (`200 OK`):**
+```json
+{
+    "status": "success",
+    "code": 200,
+    "message": "Daftar produk berhasil diambil.",
+    "data": {
+        "total": 4,
+        "produk": [
+            {
+                "id": 1,
+                "nama_produk": "Cabai Merah 1 Kg",
+                "harga": 45000,
+                "harga_format": "Rp 45.000",
+                "stok": 48,
+                "gambar": "cabai.svg",
+                "kategori": { "id": 1, "nama_kategori": "Sayur & Buah" },
+                "penjual": { "id": 1, "nama": "Admin Pasar" }
+            }
+        ]
+    }
+}
 ```
-git init
-git add .
-git commit -m "Marketplace tradisional"
-git branch -M main
-git remote add origin https://github.com/USERNAME/marketplace.git
-git push -u origin main
+
+### 2. Menampilkan Detail Produk
+- **Request:** `GET http://localhost/marketplace/api/produk.php?id=1`
+
+### 3. Membuat Pesanan Baru
+- **Request:** `POST http://localhost/marketplace/api/pesanan.php`
+- **Headers:** `Content-Type: application/json`
+- **Body (raw JSON):**
+```json
+{
+    "nama_pembeli": "Rina Kartika",
+    "telepon": "081298765432",
+    "alamat": "Jl. Sudirman No. 45, Bandung",
+    "items": [
+        { "produk_id": 1, "jumlah": 2 },
+        { "produk_id": 2, "jumlah": 1 }
+    ]
+}
 ```
-`config.php` sudah masuk `.gitignore`, jadi password tidak ikut ter-upload. Cek dengan `git status` sebelum commit.
