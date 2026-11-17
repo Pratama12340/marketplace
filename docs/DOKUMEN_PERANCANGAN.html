@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dokumen Perancangan, ERD & Screenshot Web — Pasar Nusantara</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #f4f7f5;
+      color: #1e293b;
+    }
+    .doc-sheet {
+      max-width: 960px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 35px rgba(15, 23, 42, 0.08);
+      padding: 3rem;
+    }
+    .section-title {
+      color: #0f6848;
+      font-weight: 800;
+      border-left: 5px solid #0f6848;
+      padding-left: 0.85rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .ss-card {
+      border: 1px solid #cbd5e1;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #f8fafc;
+      margin-bottom: 1.75rem;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+    }
+    .ss-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .ss-caption {
+      padding: 0.75rem 1.25rem;
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.88rem;
+      color: #475569;
+      font-weight: 600;
+    }
+    @media print {
+      body { background: #fff; }
+      .doc-sheet { box-shadow: none; margin: 0; padding: 0; max-width: 100%; }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container no-print mt-4" style="max-width:960px">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 bg-success text-white p-3 rounded-4 shadow-sm">
+    <div>
+      <strong><i class="bi bi-file-earmark-word-fill me-2"></i>Dokumen Perancangan Lengkap (Dilengkapi Gambar Web)</strong>
+      <div class="small text-white-50">Tersedia dalam format Word (.doc) maupun Cetak PDF langsung dari halaman ini.</div>
+    </div>
+    <div class="d-flex gap-2">
+      <a href="Dokumen_Perancangan_Marketplace.doc" download class="btn btn-light fw-bold rounded-pill px-3">
+        <i class="bi bi-download me-1 text-success"></i>Download Word (.doc)
+      </a>
+      <button onclick="window.print()" class="btn btn-warning fw-bold rounded-pill px-3">
+        <i class="bi bi-printer-fill me-1"></i>Cetak / Simpan PDF
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="doc-sheet">
+  <div class="border-bottom pb-4 mb-4">
+    <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-bold mb-2">DOKUMEN PERANCANGAN SISTEM &bull; TUGAS UTS</span>
+    <h2 class="fw-extrabold mb-1" style="font-weight:800">Pasar Nusantara — Web Marketplace Tradisional</h2>
+    <p class="text-muted mb-3">Aplikasi E-Commerce Pasar Tradisional Berbasis PHP Native, MySQLi (Database Transaction), dan Bootstrap 5</p>
+
+    <div class="row g-2 small bg-light p-3 rounded-3 border" contenteditable="true">
+      <div class="col-md-6"><strong>Nama / NIM:</strong> [Klik untuk isi Nama &amp; NIM Anda]</div>
+      <div class="col-md-6"><strong>Mata Kuliah:</strong> Pemrograman Web / Basis Data (UTS)</div>
+      <div class="col-md-6"><strong>URL Demo (InfinityFree):</strong> https://__________.infinityfreeapp.com</div>
+      <div class="col-md-6"><strong>URL GitHub:</strong> https://github.com/Pratama12340/marketplace</div>
+    </div>
+  </div>
+
+  <!-- 1. Identifikasi Entitas -->
+  <h5 class="section-title mt-0">1. Identifikasi Entitas &amp; Struktur Tabel</h5>
+  <table class="table table-bordered align-middle small">
+    <thead class="table-success">
+      <tr><th width="50">No</th><th width="160">Nama Tabel</th><th>Atribut Utama</th><th>Deskripsi Fungsi</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td><code>users</code></td><td><code>id</code> (PK), <code>nama</code>, <code>email</code>, <code>password</code>, <code>role</code>, <code>created_at</code></td><td>Menyimpan akun penjual/admin pengelola toko</td></tr>
+      <tr><td>2</td><td><code>kategori</code></td><td><code>id</code> (PK), <code>nama_kategori</code></td><td>Pengelompokan produk (Sayur &amp; Buah, Makanan, Kerajinan, Pakaian)</td></tr>
+      <tr><td>3</td><td><code>produk</code></td><td><code>id</code> (PK), <code>user_id</code> (FK), <code>kategori_id</code> (FK), <code>nama_produk</code>, <code>deskripsi</code>, <code>harga</code>, <code>stok</code>, <code>gambar</code></td><td>Menyimpan katalog barang dagangan, harga, dan stok</td></tr>
+      <tr><td>4</td><td><code>keranjang</code></td><td><code>id</code> (PK), <code>session_id</code>, <code>produk_id</code> (FK), <code>jumlah</code></td><td>Menyimpan daftar belanja sementara pembeli per sesi</td></tr>
+      <tr><td>5</td><td><code>pesanan</code></td><td><code>id</code> (PK), <code>kode_pesanan</code>, <code>nama_pembeli</code>, <code>telepon</code>, <code>alamat</code>, <code>total</code>, <code>status</code>, <code>created_at</code></td><td>Menyimpan data utama transaksi dan status pengiriman</td></tr>
+      <tr><td>6</td><td><code>detail_pesanan</code></td><td><code>id</code> (PK), <code>pesanan_id</code> (FK), <code>produk_id</code> (FK), <code>harga</code>, <code>jumlah</code>, <code>subtotal</code></td><td>Menyimpan rincian item dan harga historis pada setiap pesanan</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 2. ERD -->
+  <h5 class="section-title">2. Entity Relationship Diagram (ERD)</h5>
+  <div class="ss-card">
+    <img src="screenshots/erd_database.png" alt="ERD Database Pasar Nusantara">
+    <div class="ss-caption">Gambar 1 — Entity Relationship Diagram (ERD) Database Pasar Nusantara (6 Tabel Berelasi)</div>
+  </div>
+
+  <!-- 3. Alur Proses Transaksi -->
+  <h5 class="section-title">3. Diagram Alur Proses Transaksi (Database Transaction)</h5>
+  <div class="ss-card">
+    <img src="screenshots/flowchart_transaksi.png" alt="Flowchart Database Transaction">
+    <div class="ss-caption">Gambar 2 — Alur Transaksi Checkout dengan MySQLi Database Transaction (BEGIN, COMMIT, ROLLBACK)</div>
+  </div>
+
+  <!-- 4. Screenshot Website -->
+  <h5 class="section-title">4. Dokumentasi Tampilan Antarmuka Website (UI)</h5>
+
+  <div class="ss-card">
+    <img src="screenshots/1_katalog_beranda.png" alt="Halaman Utama Katalog Pasar Nusantara">
+    <div class="ss-caption">Gambar 3 — Halaman Utama / Katalog Produk Pembeli (index.php) dilengkapi Hero Banner, Pencarian, &amp; Filter Kategori</div>
+  </div>
+
+  <div class="ss-card">
+    <img src="screenshots/2_keranjang_checkout.png" alt="Halaman Checkout Pasar Nusantara">
+    <div class="ss-caption">Gambar 4 — Halaman Checkout Pengiriman &amp; Ringkasan Tagihan (checkout.php)</div>
+  </div>
+
+  <div class="ss-card">
+    <img src="screenshots/3_dashboard_penjual.png" alt="Halaman Kelola Produk Penjual">
+    <div class="ss-caption">Gambar 5 — Halaman Dashboard Penjual: Kelola Katalog Produk (admin/produk.php)</div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ecfdf5"/>
+      <stop offset="50%" stop-color="#d1fae5"/>
+      <stop offset="100%" stop-color="#a7f3d0"/>
+    </linearGradient>
+    <linearGradient id="bag" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d9f99d"/>
+      <stop offset="45%" stop-color="#86efac"/>
+      <stop offset="100%" stop-color="#16a34a"/>
+    </linearGradient>
+    <pattern id="weave" width="24" height="24" patternUnits="userSpaceOnUse">
+      <rect width="24" height="24" fill="#d97706" opacity="0.12"/>
+      <path d="M0 12 L12 0 L24 12 L12 24 Z" fill="#fef3c7" opacity="0.55"/>
+      <path d="M0 12 L12 0 L24 12 L12 24 Z" stroke="#b45309" stroke-width="1.5" fill="none" opacity="0.45"/>
+    </pattern>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#064e3b" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect width="600" height="420" fill="url(#bg)"/>
+  <circle cx="490" cy="85" r="105" fill="#6ee7b7" opacity="0.3"/>
+  <circle cx="105" cy="335" r="125" fill="#a7f3d0" opacity="0.5"/>
+  <ellipse cx="300" cy="345" rx="145" ry="22" fill="#064e3b" opacity="0.14"/>
+  <g filter="url(#shadow)">
+    <!-- Handles -->
+    <path d="M235 165 C235 80, 365 80, 365 165" stroke="#92400e" stroke-width="14" stroke-linecap="round" fill="none"/>
+    <path d="M235 165 C235 80, 365 80, 365 165" stroke="#fcd34d" stroke-width="4" stroke-dasharray="6 6" stroke-linecap="round" fill="none"/>
+    <!-- Tote Bag Body -->
+    <path d="M175 155 L425 155 L400 330 C396 342, 384 348, 370 348 L230 348 C216 348, 204 342, 200 330 Z" fill="#eab308"/>
+    <path d="M175 155 L425 155 L400 330 C396 342, 384 348, 370 348 L230 348 C216 348, 204 342, 200 330 Z" fill="url(#weave)"/>
+    <!-- Top trim & decorative band -->
+    <rect x="172" y="148" width="256" height="18" rx="8" fill="#15803d"/>
+    <rect x="190" y="232" width="220" height="26" fill="#15803d" opacity="0.88"/>
+    <path d="M195 245 L405 245" stroke="#fef08a" stroke-width="3" stroke-dasharray="8 8"/>
+    <!-- Decorative tassel -->
+    <circle cx="365" cy="175" r="8" fill="#b45309"/>
+    <path d="M365 183 L355 220 M365 183 L365 222 M365 183 L375 220" stroke="#15803d" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <rect x="24" y="356" width="185" height="38" rx="19" fill="#ffffff" opacity="0.9"/>
+  <text x="116" y="380" font-family="sans-serif" font-size="14" font-weight="700" fill="#047857" text-anchor="middle">🧺 Kerajinan Tangan Lokal</text>
+</svg>
